@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>今日の学習ログ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h2>今日の学習ログ</h2>
+
+    <input id="input" placeholder="今日学んだこと">
+    <button onclick="save()">保存</button>
+
+    <div class="log">
+        <h3>ログ</h3>
+        <ul id="list"></ul>
+    </div>
+
+    <script>
+        function load() {
+            const data = JSON.parse(localStorage.getItem("studyLog") || "[]")
+            const list = document.getElementById("list")
+            list.innerHTML = ""
+
+            data.reverse().forEach(item => {
+                const li = document.createElement("li")
+                li.textContent = item.date + " : " + item.text
+                list.appendChild(li)
+            })
+        }
+
+        function save() {
+            const input = document.getElementById("input")
+            if (input.value === "") return
+            const data = JSON.parse(localStorage.getItem("studyLog") || "[]")
+            const today = new Date().toISOString().slice(0, 10)
+
+            data.push({
+                date: today,
+                text: input.value
+            })
+            localStorage.setItem("studyLog", JSON.stringify(data))
+            input.value = ""
+            load()
+        }
+        load()
+    </script>
+
+</body>
+
+</html>
