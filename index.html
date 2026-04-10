@@ -20,6 +20,7 @@
     </div>
 
     <script>
+        // load関数
         function load() {
             const data = JSON.parse(localStorage.getItem("studyLog") || "[]")
             const list = document.getElementById("list")
@@ -31,14 +32,15 @@
                 list.appendChild(li)
             })
         }
-
+        // save関数　↑のload関数が最後に実行される
         function save() {
             const input = document.getElementById("input")
-            if (input.value === "") return
-            const data = JSON.parse(localStorage.getItem("studyLog") || "[]")
-            const today = new Date().toISOString().slice(0, 10)
+            if (input.value === "") return //空文字ならそのまま帰す（何もなしで）
+            const data = JSON.parse(localStorage.getItem("studyLog") || "[]")//★ここがわからん解説して
+            // ↑解説ローカルストレージイコールブラウザの保存機能最初はnullだよ。最初の場合は空の配列からスタート
+            const today = new Date().toISOString().slice(0, 10) //★ここもわからん
 
-            data.push({
+            data.push({ //★わからん
                 date: today,
                 text: input.value
             })
